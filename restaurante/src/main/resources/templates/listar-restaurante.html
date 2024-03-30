@@ -36,7 +36,6 @@
             <thead>
             <tr>            <!-- Cabeçalho da tabela -->
                 <th>Nome</th>
-                <th>Endereço</th>
                 <th>Editar</th>
                 <th>Excluir</th>
             </tr>
@@ -44,7 +43,6 @@
             <tbody>
             <tr th:each="restaurante : ${restaurantes}">
                 <td th:text="${restaurante.nome}"></td>
-                <td th:text="${restaurante.endereco}"></td>
                 <td>
                     <a th:href="@{/atualizar-restaurante/{id} (id=${restaurante.id})}">Editar</a>
                 </td>

@@ -13,10 +13,6 @@
     <label for="nome">Nome: </label>
     <input type="text" th:field="*{nome}" id="nome">
     <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
-    <br/>
-    <label for="">Endereço:</label>
-    <input type="text" th:field="*{endereco}" id="endereco">
-    <br/>
     <input type="submit" value="Enviar">
 </form>
 
