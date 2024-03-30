@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- Reprodução de áudio oculta -->
+<!-- <audio id="audio" autoplay style="display:none;">
+    <source src="/CafeMania.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+
+<script>
+    // Verifica se o áudio estava reproduzindo antes da atualização da página
+    window.onload = function () {
+        var audio = document.getElementById("audio");
+        var isPlaying = localStorage.getItem("audioPlaying");
+        if (isPlaying === "true") {
+            audio.play();
+        }
+    }
+
+    // Armazena o estado de reprodução do áudio
+    window.onbeforeunload = function () {
+        var audio = document.getElementById("audio");
+        localStorage.setItem("audioPlaying", audio.paused ? "false" : "true");
+    }
+</script> -->
+
+<div th:switch="${restaurantes}">
+    <h2 th:case="null">Ainda não há restaurantes!</h2>
+    <div th:case="*">
+        <h2>Restaurantes</h2>   <!-- Título da página -->
+        <table>
+            <thead>
+            <tr>            <!-- Cabeçalho da tabela -->
+                <th>Nome</th>
+                <th>Endereço</th>
+                <th>Editar</th>
+                <th>Excluir</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="restaurante : ${restaurantes}">
+                <td th:text="${restaurante.nome}"></td>
+                <td th:text="${restaurante.endereco}"></td>
+                <td>
+                    <a th:href="@{/atualizar-restaurante/{id} (id=${restaurante.id})}">Editar</a>
+                </td>
+                <td>
+                    <a th:href="@{/excluir-restaurante/{id} (id=${restaurante.id})}">Excluir</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

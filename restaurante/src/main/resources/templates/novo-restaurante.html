@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form action="#"
+      th:action="@{atualizar-restaurante/{id} (id=${restaurante.id})}"
+        th:object="${restaurante}"
+        method="post"> <!-- Formulário para atualização de um restaurante -->
+    <label for="nome">Nome: </label>
+    <input type="text" th:field="*{nome}" id="nome">
+    <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+    <br/>
+    <label for="">Endereço:</label>
+    <input type="text" th:field="*{endereco}" id="endereco">
+    <br/>
+    <input type="submit" value="Enviar">
+</form>
+
+<!-- <script>
+    // Verifica se o áudio estava reproduzindo antes da atualização da página
+    window.onload = function () {
+        var audio = document.querySelector("audio");
+        audio.play();
+    }
+</script> -->
+
+</body>
+</html>
