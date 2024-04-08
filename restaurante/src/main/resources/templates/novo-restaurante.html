@@ -3,17 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <title>Restaurante</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        form {
+            width: 50%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
 </head>
 <body>
 
 <form action="#"
-        th:action="@{/atualizar-restaurante/{id}(id=${restaurante.id})}"
-        th:object="${restaurante}"
-        method="post"> <!-- Formulário para atualização de um restaurante -->
-        <label for="nome">Nome: </label>
-        <input type="text" th:field="*{nome}" id="nome">
-        <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
-        <input type="submit" value="Enviar">
+      th:action="@{/atualizar-restaurante/{id}(id=${restaurante.id})}"
+      th:object="${restaurante}"
+      method="post"> <!-- Formulário para atualização de um restaurante -->
+    <label for="nome">Nome: </label>
+    <input type="text" th:field="*{nome}" id="nome">
+    <span th:if="${#fields.hasErrors('nome')}" class="error-message" th:errors="*{nome}"></span>
+    <input type="submit" value="Enviar">
 </form>
 
 <!-- <script>

@@ -3,30 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>Restaurantes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            color: #007bff;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .round-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .round-btn:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
 <body>
-<!-- Reprodução de áudio oculta -->
-<!-- <audio id="audio" autoplay style="display:none;">
-    <source src="/CafeMania.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-</audio>
-
-<script>
-    // Verifica se o áudio estava reproduzindo antes da atualização da página
-    window.onload = function () {
-        var audio = document.getElementById("audio");
-        var isPlaying = localStorage.getItem("audioPlaying");
-        if (isPlaying === "true") {
-            audio.play();
-        }
-    }
-
-    // Armazena o estado de reprodução do áudio
-    window.onbeforeunload = function () {
-        var audio = document.getElementById("audio");
-        localStorage.setItem("audioPlaying", audio.paused ? "false" : "true");
-    }
-</script> -->
 
 <div th:switch="${restaurantes}">               <!-- Verifica se há restaurantes cadastrados -->
     <h2 th:case="null">Ainda não há restaurantes!</h2>
@@ -44,14 +67,14 @@
             <tbody>
             <tr th:each="restaurante : ${restaurantes}">
                 <td th:text="${restaurante.nome}"></td>
-                <td><a th:href="@{'/atualizar-restaurante/' + ${restaurante.id}}">Alterar</a></td> <!-- Link para a página de atualização de um restaurante -->
-                <td><a th:href="@{'/excluir-restaurante/' + ${restaurante.id}}">Excluir</a></td> <!-- Link para a página de exclusão de um restaurante -->
-                <td><a th:href="@{/cardapio/{id}(id=${restaurante.id})}">Cardapio</a></td> <!-- Link para a página de cadastro de um novo cardápio -->
+                <td><a th:href="@{'/atualizar-restaurante/' + ${restaurante.id}}" class="btn-alterar">Alterar</a></td> <!-- Link para a página de atualização de um restaurante -->
+                <td><a th:href="@{'/excluir-restaurante/' + ${restaurante.id}}" class="btn-excluir">Excluir</a></td> <!-- Link para a página de exclusão de um restaurante -->
+                <td><a th:href="@{/cardapio/{id}(id=${restaurante.id})}" class="btn-cardapio">Cardapio</a></td> <!-- Link para a página de cadastro de um novo cardápio -->
             </tr>
             </tbody>
         </table>
     </div>
-<p><a href="/novo-restaurante" class="round-btn">+</a> Adicionar um novo restaurante</p> <!-- Link para a página de cadastro de um novo restaurante -->
+    <p><a href="/novo-restaurante" class="round-btn">+</a> Adicionar um novo restaurante</p> <!-- Link para a página de cadastro de um novo restaurante -->
 </div>
 </body>
 </html>
