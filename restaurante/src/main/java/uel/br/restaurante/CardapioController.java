@@ -59,8 +59,8 @@ public class CardapioController {
     //salvar cardapio no banco de dados na tabela item_cardapio e vincular ao restaurante selecionado
 
 
-    @PostMapping("/atualizar-cardapio/{id}")     //atualizar cardapio no banco de dados na tabela item_cardapio e vincular ao restaurante selecionado
-    public String atualizarCardapio(@PathVariable("id") Integer id, @Valid Cardapio cardapio, BindingResult result) {
+    @PostMapping("/atualizar-cardapio/{id}/{cardapioId}")     //atualizar cardapio no banco de dados na tabela item_cardapio e vincular ao restaurante selecionado
+    public String atualizarCardapio(@PathVariable("id") Integer id, @PathVariable ("cardapioId")Integer cardapioId, @Valid Cardapio cardapio, BindingResult result) {
 
         System.out.println("\n\nID recebido no atualizar-cardapio: " + id + "\n\n");
     //salvo no banco de dados o id do restaurante selecionado, a descricao do item, o preço e nome do item junto com o id dele
@@ -71,7 +71,7 @@ public class CardapioController {
         }
 
         if (result.hasErrors()) {
-            cardapio.setId(id);
+            cardapio.setId(cardapioId);
             return "atualizar-cardapio";
         }
         System.out.println("\n\nID recebido no atualizar-cardapio: " + id + "\n\n");
@@ -80,29 +80,32 @@ public class CardapioController {
                 .orElseThrow(() -> new IllegalArgumentException("ID inválido: " + id));
         cardapio.setRestaurante(restaurante);
 
-        cardapio.setId(id); // Definir o ID do cardapio com base no parâmetro do caminho
+        cardapio.setId(cardapioId); // Definir o ID do cardapio com base no parâmetro do caminho
         cardapioRepositoy.save(cardapio); // Salvar o cardapio no banco de dados
         return "redirect:/cardapio/" + id; // Redirecionar para a página de listar cardapio
     }
 
-
-
-
-
-    @GetMapping("/atualizar-cardapio/{id}")
-    public String obterCardapioParaAtualizar(@PathVariable("id") Integer id, Cardapio cardapio, Model model) {
+    @GetMapping("/atualizar-cardapio/{id}/{cardapioId}")
+    public String obterCardapioParaAtualizar(@PathVariable("id") Integer id, @PathVariable ("cardapioId")Integer cardapioId, Cardapio cardapio, Model model) {
            if (id == null) {
                 return "redirect:/listar-cardapio";
             }
-        Restaurante restaurante = restauranteRepository.findById(id)
+        Cardapio cardapio1 = cardapioRepositoy.findById(cardapioId)
                 .orElseThrow(() -> new IllegalArgumentException("O id do restaurante é inválido:" + id));
+        model.addAttribute("cardapio", cardapio1);
+        Restaurante restaurante = cardapio1.getRestaurante();
         model.addAttribute("restaurante", restaurante);
         return "atualizar-cardapio";
     }
 
 
-    //listar o cardapio APENAS do restaurante selecionado (que corresponde ao id do restaurante)
-
-
+  //alterar item do cardapio
+    @GetMapping("/alterar-cardapio/{id}")
+    public String alterarCardapio(@PathVariable("id") Integer id, Model model) {
+        Cardapio cardapio = cardapioRepositoy.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("ID inválido: " + id));
+        model.addAttribute("cardapio", cardapio);
+        return "atualizar-cardapio";
+    }
 }
 

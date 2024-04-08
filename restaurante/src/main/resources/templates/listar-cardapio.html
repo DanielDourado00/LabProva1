@@ -16,6 +16,7 @@
                 <th>Nome do prato</th>
                 <th>Preço</th>
                 <th>Descrição</th>
+                <th>Alterar</th>
 
             </tr>
             </thead>
@@ -24,11 +25,13 @@
                 <td th:text="${item.nome}"></td>
                 <td th:text="${item.preco}"></td>
                 <td th:text="${item.descricao}"></td>
+                <td><a th:href="@{'/atualizar-cardapio/' + ${restaurante.id} + '/' + ${item.id}}">Alterar</a></td>
             </tr>
             </tbody>
         </table>
     </div>
     <p><a th:href="@{'/novo-cardapio/' + ${id}}" class="round-btn">+</a> Adicionar um novo cardápio</p>
+    <p><a href="/listar-restaurante" class="round-btn">+</a> Voltar</p> <!-- Link para a página de cadastro de um novo restaurante -->
 </div>
 
 </body>
