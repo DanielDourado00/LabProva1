@@ -90,7 +90,7 @@ public class CardapioController {
            if (id == null) {
                 return "redirect:/listar-cardapio";
             }
-        Cardapio cardapio1 = cardapioRepositoy.findById(cardapioId)
+        Cardapio cardapio1 = cardapioRepositoy.findById(cardapioId)   //vai pegar o id do cardapio
                 .orElseThrow(() -> new IllegalArgumentException("O id do restaurante é inválido:" + id));
         model.addAttribute("cardapio", cardapio1);
         Restaurante restaurante = cardapio1.getRestaurante();
@@ -107,5 +107,13 @@ public class CardapioController {
         model.addAttribute("cardapio", cardapio);
         return "atualizar-cardapio";
     }
-}
 
+    //excluir item do cardapio
+    @GetMapping("/excluir-cardapio/{id}/{cardapioId}")      //é passado o id do restaurante e o id do cardapio
+    public String excluirCardapio(@PathVariable("id") Integer id, @PathVariable("cardapioId") Integer cardapioId) {
+     Cardapio cardapio = cardapioRepositoy.findById(cardapioId)    //vai pegar o id do cardapio
+                .orElseThrow(() -> new IllegalArgumentException("ID inválido: " + cardapioId));
+        cardapioRepositoy.delete(cardapio);    //vai deletar o cardapio
+        return "redirect:/cardapio/" + id;    //vai redirecionar para a página de cardapio
+    }
+}

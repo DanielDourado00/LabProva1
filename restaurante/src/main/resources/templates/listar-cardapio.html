@@ -17,6 +17,7 @@
                 <th>Preço</th>
                 <th>Descrição</th>
                 <th>Alterar</th>
+                <th>Remover</th>
 
             </tr>
             </thead>
@@ -26,6 +27,7 @@
                 <td th:text="${item.preco}"></td>
                 <td th:text="${item.descricao}"></td>
                 <td><a th:href="@{'/atualizar-cardapio/' + ${restaurante.id} + '/' + ${item.id}}">Alterar</a></td>
+                <td><a th:href="@{'/excluir-cardapio/' + ${restaurante.id} + '/' + ${item.id}}">-</a></td>
             </tr>
             </tbody>
         </table>
