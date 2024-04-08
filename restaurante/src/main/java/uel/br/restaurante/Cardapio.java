@@ -16,7 +16,7 @@ public class Cardapio implements Serializable {
     @JoinColumn(name = "id_restaurante", nullable = false) //Anotação que indica a chave estrangeira que faz o relacionamento //nullable = false indica que o campo não pode ser nulo
     private Restaurante restaurante; //Restaurante é a classe que representa o restaurante
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Anotação que indica que o campo é uma chave primária e que é gerada automaticamente
     private int id; //id do item do cardapio
     private String nome; //nome do item do cardapio
     private String descricao; //descrição do item do cardapio

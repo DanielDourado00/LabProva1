@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -27,24 +28,13 @@ public class RestauranteController {
     }
 
     /*Postar no banco de dados*/
-    //HTML co clicar em novo restaurante, vai chamar o metodo salvar-restaurante
-    @PostMapping("/salvar-restaurante")    //A anotação @PostMapping é usada para mapear solicitações HTTP POST para métodos de manipulação de solicitação específicos.
-    public String salvarrestaurante(Restaurante restaurante, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "/novo-restaurante";
-        }
-        restauranteRepository.save(restaurante);            //isso vai salvar o restaurante no banco de dados
-        return "redirect:/listar-restaurante";              //redireciona para a página de listar restaurante
-    }
-
-    //apoos chamar a url novo-restaurante, dentro do html, o usuario vai preencher os campos e clicar em salvar, isso vai chamar o metodo atualizar-restaurante
-    //ao clicar em enviar, o metodo atualizar-restaurante vai salvar os dados no banco de dados
-    //ou seja, este metodo e para postar no banco de dados
 
     //A anotação @PostMapping é usada para mapear solicitações HTTP POST para métodos de manipulação de solicitação específicos, ele vai salvar o restaurante no banco de dados
     //é usado no html novo-restaurante
-    @PostMapping("/atualizar-restaurante/{id}")
+    @PostMapping("/atualizar-restaurante/{id}") //posta no banco de dados
     public String atualizarrestaurante(@PathVariable("id") Integer id, @Valid Restaurante restaurante, BindingResult result) {
+        //printar informacoes do restaurante para debug
+
         if (id == null) {
             // Lidar com o cenário em que o id é nulo
             // Por exemplo, você pode redirecionar para uma página de erro ou retornar uma mensagem de erro para o usuário
@@ -56,7 +46,7 @@ public class RestauranteController {
             return "atualizar-restaurante";
         }
         restaurante.setId(id); // Definir o ID do restaurante com base no parâmetro do caminho
-        restauranteRepository.save(restaurante);
+        restauranteRepository.save(restaurante); // Salvar o restaurante no banco de dados
         return "redirect:/listar-restaurante";
     }
 
@@ -89,10 +79,13 @@ public class RestauranteController {
     //redireciona para a página listar-cardapio.html com o id do restaurante
     @GetMapping("/cardapio/{id}")
     public String cardapio(@PathVariable("id") int id, Model model) {
-        Restaurante restaurante = restauranteRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("ID inválido: " + id)); //vai pegar o id do restaurante
-        model.addAttribute("restaurante", restaurante);                 //vai adicionar o restaurante no model
-        model.addAttribute("cardapio", restaurante.getCardapio());      //vai adicionar o cardapio no model
+        System.out.println("\n\nID recebido no RestauranteController cardapio: " + id + "\n\n");
+        System.out.println("\n\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n\n");
+        Restaurante restaurante = restauranteRepository.findById(id)                   //pega id do restaurante
+             .orElseThrow(() -> new IllegalArgumentException("ID inválido: " + id));
+     List<Cardapio> cardapios = new ArrayList<>(restaurante.getCardapioSet());                        //pega cardapio do restaurante
+        model.addAttribute("restaurante", restaurante);                 //adiciona o restaurante no model
+        model.addAttribute("cardapios", cardapios);                     //adiciona o cardapio no model
         return "listar-cardapio";
     }
 

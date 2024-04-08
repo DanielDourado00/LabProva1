@@ -5,8 +5,8 @@
     <title>Cardápio</title>
 </head>
 <body>
-
-<div th:switch="${cardapio}">
+<h1 th:text="${restaurante.nome}"> </h1>
+<div th:switch="${cardapios}">
     <h2 th:case="null">Ainda não há cardápios!</h2>
     <div th:case="*">
         <h2>Cardápios</h2>
@@ -15,19 +15,20 @@
             <tr>
                 <th>Nome do prato</th>
                 <th>Preço</th>
-                <th>Alterar</th>
+                <th>Descrição</th>
+
             </tr>
             </thead>
             <tbody>
-            <tr th:each="item : ${cardapio}">
+            <tr th:each="item : ${cardapios}">
                 <td th:text="${item.nome}"></td>
                 <td th:text="${item.preco}"></td>
-                <td><a th:href="@{'/atualizar-cardapio/' + ${item.id}}">Alterar</a></td>
+                <td th:text="${item.descricao}"></td>
             </tr>
             </tbody>
         </table>
     </div>
-    <p><a href="/novo-cardapio" class="round-btn">+</a> Adicionar Cardapio</p> <!-- Link para a página de cadastro de um novo restaurante -->
+    <p><a th:href="@{'/novo-cardapio/' + ${id}}" class="round-btn">+</a> Adicionar um novo cardápio</p>
 </div>
 
 </body>

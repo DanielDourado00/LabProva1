@@ -6,18 +6,19 @@
 </head>
 <body>
 
-<form action="#"
-      th:action="@{'/atualizar-cardapio/' + ${cardapio.id}}"
+<form th:action="@{/atualizar-cardapio/{id}(id=${restaurante.id})}"
       th:object="${cardapio}"
-      method="post">
-    <label for="nome">Nome do prato: </label>
+      method="post"> <!-- Formulário para atualização de um cardápio -->
+    <label for="nome">Nome: </label>
     <input type="text" th:field="*{nome}" id="nome">
     <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
-    <br>
     <label for="preco">Preço: </label>
     <input type="text" th:field="*{preco}" id="preco">
     <span th:if="${#fields.hasErrors('preco')}" th:errors="*{preco}"></span>
-    <br>
+    <input type="submit" value="Enviar">
+    <label> for "descricao">Descrição: </label>
+    <input type="text" th:field="*{descricao}" id="descricao">
+    <span th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}"></span>
     <input type="submit" value="Enviar">
 </form>
 

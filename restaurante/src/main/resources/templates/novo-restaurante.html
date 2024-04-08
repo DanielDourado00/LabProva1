@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Restaurante</title>
 </head>
 <body>
 
 <form action="#"
-      th:action="@{atualizar-restaurante/{id} (id=${restaurante.id})}"
+        th:action="@{/atualizar-restaurante/{id}(id=${restaurante.id})}"
         th:object="${restaurante}"
         method="post"> <!-- Formulário para atualização de um restaurante -->
-    <label for="nome">Nome: </label>
-    <input type="text" th:field="*{nome}" id="nome">
-    <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
-    <input type="submit" value="Enviar">
+        <label for="nome">Nome: </label>
+        <input type="text" th:field="*{nome}" id="nome">
+        <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+        <input type="submit" value="Enviar">
 </form>
 
 <!-- <script>

@@ -5,17 +5,22 @@
     <title>Atualizar Cardapio</title>
 </head>
 <body>
-    <form action="#"
-            th:action="@{/atualizar-cardapio/{id} (id=${cardapio.id})}"
-            th:object="${cardapio}"
-            method="post">
-            <label for="nome">Nome: </label>
-            <input type="text" th:field="*{nome}" id="nome">
-            <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
-            <label for="preco">Preço: </label>
-            <input type="text" th:field="*{preco}" id="preco">
-            <span th:if="${#fields.hasErrors('preco')}" th:errors="*{preco}"></span>
-            <input type="submit" value="Enviar">
-    </form>
+<h1 th:text="${restaurante.nome}"> </h1>
+<form th:action="@{/atualizar-cardapio/{id}(id=${cardapio.id})}"
+      th:object="${cardapio}"
+      method="post">
+    <input type="hidden" th:name="idRestaurante" th:value="${restaurante.id}" />
+    <label for="nome">Nome: </label>
+    <input type="text" th:field="*{nome}" id="nome">
+    <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+    <label for="preco">Preço: </label>
+    <input type="text" th:field="*{preco}" id="preco">
+    <span th:if="${#fields.hasErrors('preco')}" th:errors="*{preco}"></span>
+    <label for="descricao">Descrição: </label>
+    <input type="text" th:field="*{descricao}" id="descricao">
+    <span th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}"></span>
+    <input type="submit" value="Enviar">
+</form>
+
 </body>
 </html>
