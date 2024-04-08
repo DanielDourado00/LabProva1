@@ -58,4 +58,8 @@ public class Restaurante implements Serializable {
     public int hashCode() {
         return this.id * 31;    //31 é um número primo, que é usado para gerar o código hash
     }
+
+    public Object getCardapio() {
+        return cardapio;
+    }
 }

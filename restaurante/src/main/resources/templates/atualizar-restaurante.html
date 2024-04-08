@@ -5,14 +5,14 @@
     <title>Atualizar Restaurante</title>
 </head>
 <body>
-<form action="#"
-      th:action="@{/atualizar-restaurante/{id}(id=${restaurante.id})}"
+<form th:action="@{/atualizar-restaurante/{id}(id=${restaurante.id})}"
       th:object="${restaurante}"
-        method="post">
+      method="post"> <!-- Formulário para atualização de um restaurante -->
     <label for="nome">Nome: </label>
     <input type="text" th:field="*{nome}" id="nome">
     <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
     <input type="submit" value="Enviar">
 </form>
+
 </body>
 </html>

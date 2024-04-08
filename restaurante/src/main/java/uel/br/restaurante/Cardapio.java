@@ -8,7 +8,8 @@ import java.util.Date;
 
 //itens do cardapio do restaurante
 @Entity //Anotação que indica que a classe é uma entidade
-@Table(name = "restaurante") //Anotação que indica o nome da tabela no banco de dados
+@Table(name = "item_cardapio") //Anotação que indica o nome da tabela no banco de dados
+ //Anotação que indica o nome da tabela no banco de dados
 public class Cardapio implements Serializable {
 
     @ManyToOne //Anotação que indica que a classe tem um relacionamento de muitos para um com a classe Restaurante

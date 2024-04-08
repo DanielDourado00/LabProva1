@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Novo cardapio</title>
+</head>
+<body>
+
+<form action="#"
+      th:action="@{'/atualizar-cardapio/' + ${cardapio.id}}"
+      th:object="${cardapio}"
+      method="post">
+    <label for="nome">Nome do prato: </label>
+    <input type="text" th:field="*{nome}" id="nome">
+    <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+    <br>
+    <label for="preco">Preço: </label>
+    <input type="text" th:field="*{preco}" id="preco">
+    <span th:if="${#fields.hasErrors('preco')}" th:errors="*{preco}"></span>
+    <br>
+    <input type="submit" value="Enviar">
+</form>
+
+<!-- <script>
+    // Verifica se o áudio estava reproduzindo antes da atualização da página
+    window.onload = function () {
+        var audio = document.querySelector("audio");
+        audio.play();
+    }
+</script> -->
+
+</body>
+</html>
