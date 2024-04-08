@@ -3,6 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <title>Atualizar Cardapio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        form {
+            width: 50%;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
 </head>
 <body>
 <h1 th:text="${restaurante.nome}"> </h1>
@@ -12,13 +67,13 @@
     <input type="hidden" th:name="idRestaurante" th:value="${restaurante.id}" />
     <label for="nome">Nome: </label>
     <input type="text" th:field="*{nome}" id="nome">
-    <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+    <span th:if="${#fields.hasErrors('nome')}" class="error-message" th:errors="*{nome}"></span>
     <label for="preco">Preço: </label>
     <input type="text" th:field="*{preco}" id="preco">
-    <span th:if="${#fields.hasErrors('preco')}" th:errors="*{preco}"></span>
+    <span th:if="${#fields.hasErrors('preco')}" class="error-message" th:errors="*{preco}"></span>
     <label for="descricao">Descrição: </label>
     <input type="text" th:field="*{descricao}" id="descricao">
-    <span th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}"></span>
+    <span th:if="${#fields.hasErrors('descricao')}" class="error-message" th:errors="*{descricao}"></span>
     <input type="submit" value="Enviar">
 </form>
 </body>
