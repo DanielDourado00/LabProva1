@@ -84,6 +84,7 @@ public class RestauranteController {
         Restaurante restaurante = restauranteRepository.findById(id)                   //pega id do restaurante
              .orElseThrow(() -> new IllegalArgumentException("ID inválido: " + id));
      List<Cardapio> cardapios = new ArrayList<>(restaurante.getCardapioSet());                        //pega cardapio do restaurante
+
         model.addAttribute("restaurante", restaurante);                 //adiciona o restaurante no model
         model.addAttribute("cardapios", cardapios);                     //adiciona o cardapio no model
         return "listar-cardapio";

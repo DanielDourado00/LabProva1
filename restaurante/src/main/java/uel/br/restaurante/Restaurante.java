@@ -20,7 +20,7 @@ import java.util.Set;
 @Table(name = "restaurante")
 public class Restaurante implements Serializable {
 
-    @OneToMany(mappedBy = "restaurante")
+    @OneToMany(mappedBy = "restaurante")    //Anotação que indica que a classe tem um relacionamento de um para muitos com a classe Cardapio
     //Anotação que indica que a classe tem um relacionamento de um para muitos com a classe Cardapio
     private Set<Cardapio> cardapio;
     @Id

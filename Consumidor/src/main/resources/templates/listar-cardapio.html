@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cardápio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        h2 {
+            color: #007bff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .round-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .round-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+<h1 th:text="${restaurante.nome}"> </h1>
+<div th:switch="${cardapios}">
+    <h2 th:case="null">Ainda não há cardápios!</h2>
+    <div th:case="*">
+        <h2>Cardápio</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Nome do prato</th>
+                <th>Preço</th>
+                <th>Descrição</th>
+                <th>Pedir</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${cardapios}">
+                <td th:text="${item.nome}"></td>
+                <td th:text="${item.preco}"></td>
+                <td th:text="${item.descricao}"></td>
+                <td><a th:href="@{'/carrinho/' + ${restaurante.id} + '/' + ${item.id}}">+</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a class="round-btn" th:href="@{'/listar-restaurante'}">Voltar para Restaurantes</a></p>
+</div>
+</body>
+</html>
