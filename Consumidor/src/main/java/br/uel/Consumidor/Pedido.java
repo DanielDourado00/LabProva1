@@ -21,6 +21,12 @@ public class Pedido extends CardapioConsumidor implements Serializable {
     public Pedido() {
 
     }
+  //ter um cardapio com getters e setters
+    private CardapioConsumidor cardapio;
+
+    public CardapioConsumidor getCardapio() {
+        return cardapio;
+    }
 
     private double valor;
 

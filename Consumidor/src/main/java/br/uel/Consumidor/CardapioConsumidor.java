@@ -56,7 +56,6 @@ public class CardapioConsumidor implements Serializable {
     }
 
 
-
     @Override
     public boolean equals(Object o) { // Método que compara se dois objetos são iguais
         if (o == null || this.getClass() != o.getClass()) {

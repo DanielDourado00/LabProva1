@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Pedido</title>
+    <title>Visualizar Carrinho</title>
     <style>
         /* Estilos para a tabela */
         table {
@@ -41,37 +41,23 @@
     </style>
 </head>
 <body>
+
 <!-- Cabeçalho do pedido -->
+<h1 th:text="${restaurante.nome}"></h1>
 <div th:switch="${pedido}">
-    <h2 th:case="null">Ainda não há Pedidos!</h2>
+    <h2 th:case="null">Ainda não há cardápios!</h2>
     <div th:case="*">
-        <h2>Pedido</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Nome do prato</th>
-                <th>Descrição</th>
-                <th>Quantidade</th>
-                <th>Preço do prato</th>
-                <th>Acrescentar</th>
-                <th>Remover</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!-- Iteração sobre os itens do pedido -->
-            <tr th:each="item : ${pedido}">
-                <td th:text="${item.nome}"></td>
-                <td th:text="${item.descricao}"></td>
-                <td th:text="${item.quantidade}"></td>
-                <td th:text="${item.preco}"></td>
-                <td><a th:href="@{'/acrescentar-item/' + ${item.id}}">+</a></td>
-                <td><a th:href="@{'/remover-item/' + ${item.id}}">-</a></td>
-            </tr>
-            </tbody>
-        </table>
+        <h2>Seu Pedido</h2>
+        <ul>
+            <li th:each="item : ${pedido}">
+                <span th:text="${item.nome}"></span>
+                <span th:text="${item.quantidade}"></span>
+                <span th:text="${item.preco}"></span>
+            </li>
+        </ul>
         <p>Total: R$ <span th:text="${total}"></span></p>
-        <p><a class="round-btn" th:href="@{'/listar-restaurante'}">Voltar para Restaurantes</a></p>
-    </div>
+
+</div>
 </div>
 </body>
 </html>
