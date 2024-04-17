@@ -22,7 +22,7 @@ public class Restaurante implements Serializable {
 
     @OneToMany(mappedBy = "restaurante")    //Anotação que indica que a classe tem um relacionamento de um para muitos com a classe Cardapio
     //Anotação que indica que a classe tem um relacionamento de um para muitos com a classe Cardapio
-    private Set<Cardapio> cardapio;
+    private Set<Cardapio> cardapio; //Cardapio é a classe que representa o cardapio do restaurante
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id; //id do restaurante
@@ -61,7 +61,7 @@ public class Restaurante implements Serializable {
     }
 
 
-    public Set<Cardapio> getCardapioSet() {
+    public Set<Cardapio> getCardapioSet() {     //Método que retorna o cardapio do restaurante
         return cardapio;
     }
 }

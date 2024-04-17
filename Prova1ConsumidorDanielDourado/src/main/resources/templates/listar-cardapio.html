@@ -53,8 +53,8 @@
     </style>
 </head>
 <body>
-<h1 th:text="${restaurante.nome}"> </h1>
-<div th:switch="${cardapios}">
+<h1 th:text="${restaurante.nome}"> </h1>        <!-- Exibe o nome do restaurante -->
+<div th:switch="${cardapios}">                  <!-- Verifica se há cardápios cadastrados -->
     <h2 th:case="null">Ainda não há cardápios!</h2>
     <div th:case="*">
         <h2>Cardápio</h2>

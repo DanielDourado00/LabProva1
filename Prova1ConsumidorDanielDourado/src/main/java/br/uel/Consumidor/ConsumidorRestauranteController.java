@@ -18,6 +18,7 @@ import java.io.Serializable;
 public class ConsumidorRestauranteController implements Serializable {
 
     private static final String SESSION_CONSUMIDOR = "pedido";  //Atributo que representa a sessão do consumidor
+    private static final String SESSION_RESTAURANTE = "restaurantes";  //Atributo que representa a sessão do restaurante
 
     @Autowired
     ConsumidorRestauranteRepository consumidorRepository; //Anotação que indica que a classe é um repositório
@@ -55,7 +56,7 @@ public class ConsumidorRestauranteController implements Serializable {
         System.out.println("\n\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n\n");
         ConsumidorRestaurante restaurante = consumidorRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("ID inválido: " + id));
-        List<CardapioConsumidor> cardapios = new ArrayList<>(restaurante.getPedidos());
+        List<CardapioConsumidor> cardapios = new ArrayList<>(restaurante.getPedidos());     // Lista de cardápios do restaurante
 
         model.addAttribute("restaurante", restaurante); // Adicionar o consumidor ao modelo
         model.addAttribute("cardapios", cardapios);
@@ -76,7 +77,7 @@ public class ConsumidorRestauranteController implements Serializable {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("ID inválido: " + cardapioId));
 
-        // Verificar se o item ainda está disponível no cardápio
+        // Verificar se o item ainda está disponível no cardápio ---funcao falha
         if (!restaurante.getPedidos().contains(cardapio)) {
             // Item não está mais disponível, então redirecione para algum lugar apropriado
             // Remover o item do carrinho
@@ -111,58 +112,81 @@ public class ConsumidorRestauranteController implements Serializable {
         // Definir a sessão do consumidor com o pedido atualizado
         request.getSession().setAttribute(SESSION_CONSUMIDOR, pedido);
 
-        // Redirecionar para a página de listar cardápio do restaurante
+
         return "redirect:/pedido";
     }
 
 
 
     @GetMapping("/pedido")
-    public String pedido( HttpServletRequest request, Model model) {
-
-
+    public String pedido(HttpServletRequest request, Model model) {
         List<Pedido> pedido = (List<Pedido>) request.getSession().getAttribute(SESSION_CONSUMIDOR);
         if (pedido == null) {
             pedido = new ArrayList<>();
         }
 
+        // Obter todos os itens do cardápio do banco de dados
+        List<CardapioConsumidor> cardapiosDisponiveis = new ArrayList<>();
+        List<ConsumidorRestaurante> restaurantes = consumidorRepository.findAll();
+        for (ConsumidorRestaurante restaurante : restaurantes) {
+            cardapiosDisponiveis.addAll(restaurante.getPedidos());
+        }
 
+        // Verificar cada item do pedido em relação aos itens disponíveis no banco de dados
+        List<Pedido> pedidosAtualizados = new ArrayList<>();
+        for (Pedido itemPedido : pedido) {
+            boolean itemEncontrado = false;
+            for (CardapioConsumidor itemCardapio : cardapiosDisponiveis) {
+                if (itemPedido.getId() == itemCardapio.getId()) {
+                    // Se o item do pedido ainda estiver disponível, adicioná-lo à lista de pedidos atualizados
+                    pedidosAtualizados.add(itemPedido);
+                    itemEncontrado = true;
+                    break;
+                }
+            }
+            // Se o item do pedido não foi encontrado nos itens disponíveis, não adicioná-lo aos pedidos atualizados
+            if (!itemEncontrado) {
+                System.out.println("Item com ID " + itemPedido.getId() + " não está mais disponível e será removido do pedido.");
+            }
+        }
 
+        // Atualizar o pedido na sessão com os pedidos atualizados
+        request.getSession().setAttribute(SESSION_CONSUMIDOR, pedidosAtualizados);
 
-        double total = 0.0; // Inicializa o total como zero
-
-        // Calcula o valor total somando o valor de cada item no pedido
-        for (Pedido item : pedido) {
+        double total = 0.0;
+        for (Pedido item : pedidosAtualizados) {
             total += item.getValor();
         }
 
-        model.addAttribute("pedido", pedido);
+        model.addAttribute("pedido", pedidosAtualizados);
         model.addAttribute("total", total);
+        model.addAttribute("restaurantes", restaurantes);
         return "pedido";
     }
+
 
 
 
     @GetMapping("/acrescentar-item/{id}")
     public String acrescentarItem(@PathVariable("id") int id, HttpServletRequest request) {
         List<Pedido> pedido = (List<Pedido>) request.getSession().getAttribute(SESSION_CONSUMIDOR);
-        if (pedido == null) {
+        if (pedido == null) {   // Se o pedido estiver vazio, crie uma nova lista
             pedido = new ArrayList<>();
         }
 
-        Pedido item = pedido.stream()
-                .filter(p -> p.getId() == id)
-                .findFirst()
-                .orElse(null);
+        Pedido item = pedido.stream()   // Encontre o item no pedido
+                .filter(p -> p.getId() == id)   // Filtrar o item com base no ID
+                .findFirst()    // Encontrar o primeiro item
+                .orElse(null);  // Se não houver item, retorne nulo
 
-        if (item != null) {
+        if (item != null) {     // Se o item estiver no pedido, aumente sua quantidade
             item.setQuantidade(item.getQuantidade() + 1);
             item.setValor(item.getPreco() * item.getQuantidade());
         } else {
             System.err.println("Item com ID " + id + " não encontrado no pedido.");
         }
 
-        request.getSession().setAttribute(SESSION_CONSUMIDOR, pedido);
+        request.getSession().setAttribute(SESSION_CONSUMIDOR, pedido);  // Definir a sessão do consumidor com o pedido atualizado
 
         return "redirect:/pedido";
     }
@@ -180,8 +204,8 @@ public class ConsumidorRestauranteController implements Serializable {
 
         if (item != null) {
             item.setQuantidade(item.getQuantidade() - 1);
-            if (item.getQuantidade() <= 0) {
-                pedido.remove(item);
+            if (item.getQuantidade() <= 0) {    // Se a quantidade for menor ou igual a zero, remova o item do pedido
+                pedido.remove(item);            // Remover o item do pedido
             } else {
                 item.setValor(item.getPreco() * item.getQuantidade());
             }
@@ -195,3 +219,4 @@ public class ConsumidorRestauranteController implements Serializable {
     }
 
 }
+

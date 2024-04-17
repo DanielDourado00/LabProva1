@@ -13,7 +13,7 @@ import java.util.Set;
 public class ConsumidorRestaurante implements Serializable {
 
     @OneToMany(mappedBy = "restaurante")
-    private Set<CardapioConsumidor> cardapio;
+    private Set<CardapioConsumidor> cardapio; // Atributo que representa o cardápio do restaurante
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     // Indica que o valor do atributo é gerado automaticamente pelo banco de dados

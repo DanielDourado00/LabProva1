@@ -30,7 +30,7 @@ public class CardapioController {
 
 
     //funcao novo-cardapio que recebe o id do restaurante e retorna a pagina novo-cardapio
-    @GetMapping("/novo-cardapio/{id}")
+    @GetMapping("/novo-cardapio/{id}")      //passando o id do restaurante
     //A anotação @GetMapping é usada para mapear solicitações HTTP GET para métodos de manipulação de solicitação específicos.
     public String novoCardapio(@PathVariable("id") int id, Model model) {    //vai pegar o id do cardapio
       System.out.println("\n\nID recebido: no novo-cardapio " + id + "\n\n");
@@ -86,14 +86,14 @@ public class CardapioController {
     }
 
 
-  //alterar item do cardapio
+/*  //alterar item do cardapio
     @GetMapping("/alterar-cardapio/{id}")
     public String alterarCardapio(@PathVariable("id") Integer id, Model model) {
         Cardapio cardapio = cardapioRepositoy.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("ID inválido: " + id));
         model.addAttribute("cardapio", cardapio);
         return "atualizar-cardapio";
-    }
+    }*/
 
     //excluir item do cardapio
     @GetMapping("/excluir-cardapio/{id}/{cardapioId}")      //é passado o id do restaurante e o id do cardapio

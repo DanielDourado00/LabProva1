@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "item_cardapio")
-public class CardapioConsumidor implements Serializable {
+public class CardapioConsumidor implements Serializable { //serializable é uma interface que permite a conversão de um objeto em um fluxo de bytes para ser armazenado em um arquivo, banco de dados ou memória.
 
     @ManyToOne
     @JoinColumn(name = "id_restaurante", nullable = false)

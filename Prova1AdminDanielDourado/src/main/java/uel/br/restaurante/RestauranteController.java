@@ -31,7 +31,7 @@ public class RestauranteController {
 
     //A anotação @PostMapping é usada para mapear solicitações HTTP POST para métodos de manipulação de solicitação específicos, ele vai salvar o restaurante no banco de dados
     //é usado no html novo-restaurante
-    @PostMapping("/atualizar-restaurante/{id}") //posta no banco de dados
+    @PostMapping("/atualizar-restaurante/{id}")
     public String atualizarrestaurante(@PathVariable("id") Integer id, @Valid Restaurante restaurante, BindingResult result) {
         //printar informacoes do restaurante para debug
 
@@ -76,8 +76,7 @@ public class RestauranteController {
         model.addAttribute("restaurantes", restauranteRepository.findAll());    //vai adicionar o atributo restaurantes, que vai ser uma lista de todos os restaurantes
         return "listar-restaurante";                    //vai retornar para a página de listar restaurante
     }
-    //redireciona para a página listar-cardapio.html com o id do restaurante
-    @GetMapping("/cardapio/{id}")
+    @GetMapping("/cardapio/{id}") //passado o id do restaurante
     public String cardapio(@PathVariable("id") int id, Model model) {
         System.out.println("\n\nID recebido no RestauranteController cardapio: " + id + "\n\n");
         System.out.println("\n\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n\n");
@@ -85,7 +84,7 @@ public class RestauranteController {
              .orElseThrow(() -> new IllegalArgumentException("ID inválido: " + id));
      List<Cardapio> cardapios = new ArrayList<>(restaurante.getCardapioSet());                        //pega cardapio do restaurante
 
-        model.addAttribute("restaurante", restaurante);                 //adiciona o restaurante no model
+        model.addAttribute("restaurante", restaurante);                 //adiciona o restaurante no model, objeto que vai ser passado para o html
         model.addAttribute("cardapios", cardapios);                     //adiciona o cardapio no model
         return "listar-cardapio";
     }
